@@ -1,0 +1,365 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Checkout - Minimal GPT Link Generator">
+    <div class="max-w-2xl mx-auto px-6 py-12 sm:py-20">
+
+        <!-- ═══════════════════ HEADER ═══════════════════ -->
+        <header class="text-center mb-12">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-zinc-100 dark:bg-zinc-800 mb-6">
+                <svg class="w-7 h-7 text-black dark:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                    <line x1="2" y1="10" x2="22" y2="10"></line>
+                </svg>
+            </div>
+            <h1 class="text-3xl font-bold tracking-tight text-black dark:text-white">Checkout</h1>
+            <p class="text-zinc-500 mt-2 text-sm">Buat link pembayaran ChatGPT Plus secara instan</p>
+        </header>
+
+        <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
+        <main class="card-minimal p-5 sm:p-10" id="main-card">
+
+            <!-- Panduan Langkah (Pindah ke Atas) -->
+            <div class="bg-zinc-50 dark:bg-zinc-800/30 rounded-2xl p-5 sm:p-6 border border-zinc-100 dark:border-zinc-800 mb-8">
+                <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-zinc-400">Cara Penggunaan</h3>
+                <ul class="space-y-4">
+                    <li class="flex gap-3">
+                        <span class="flex-shrink-0 w-5 h-5 rounded-full bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center">1</span>
+                        <p class="text-[11px] sm:text-xs text-zinc-500 leading-relaxed">Login ke akun <a href="https://chatgpt.com" target="_blank" class="text-black dark:text-white underline">ChatGPT</a> Anda terlebih dahulu.</p>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="flex-shrink-0 w-5 h-5 rounded-full bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center">2</span>
+                        <p class="text-[11px] sm:text-xs text-zinc-500 leading-relaxed">Buka link <a href="https://chatgpt.com/api/auth/session" target="_blank" class="text-black dark:text-white font-medium underline">chatgpt.com/api/auth/session</a> di tab baru.</p>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="flex-shrink-0 w-5 h-5 rounded-full bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center">3</span>
+                        <p class="text-[11px] sm:text-xs text-zinc-500 leading-relaxed">Salin (Copy) seluruh kode JSON yang muncul di halaman tersebut.</p>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="flex-shrink-0 w-5 h-5 rounded-full bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center">4</span>
+                        <p class="text-[11px] sm:text-xs text-zinc-500 leading-relaxed">Tempel (Paste) ke kolom **Auth Session** di bawah dan klik generate.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Plan Selection -->
+            <div class="mb-8">
+                <h2 class="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em] mb-4">Pilih Paket</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <!-- GPT Business (disabled) -->
+                    <div class="plan-card disabled rounded-2xl p-4 sm:p-5" id="plan-team">
+                        <span class="plan-unavailable-badge">Offline</span>
+                        <div class="flex flex-col gap-1">
+                            <p class="font-bold text-zinc-400 text-sm sm:text-base">GPT Business</p>
+                            <p class="text-[10px] sm:text-xs text-zinc-500">Untuk tim & bisnis</p>
+                        </div>
+                    </div>
+                    <!-- GPT Plus (active) -->
+                    <div class="plan-card active rounded-2xl p-4 sm:p-5" id="plan-plus">
+                        <div class="flex flex-col gap-1">
+                            <p class="font-bold text-black dark:text-white text-sm sm:text-base">GPT Plus</p>
+                            <p class="text-[10px] sm:text-xs text-zinc-500">Penggunaan pribadi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-px bg-zinc-100 dark:bg-zinc-800 mb-8"></div>
+
+            <!-- Form -->
+            <div class="space-y-6">
+                <!-- Payment Method -->
+                <div>
+                    <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-2">Metode Pembayaran</label>
+                    <div class="search-dropdown" id="paymentDropdown">
+                        <div class="input-minimal cursor-pointer text-sm" id="paymentDisplay">
+                            Direct Checkout (ChatGPT)
+                        </div>
+                        <input type="hidden" id="paymentMethod" value="shortlink">
+                        <div class="search-dropdown-list" id="paymentList">
+                            <div class="search-dropdown-item active text-xs" data-value="shortlink">Direct Checkout (ChatGPT)</div>
+                            <div class="search-dropdown-item text-xs" data-value="longlink">Stripe Hosted (Stripe)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Currency -->
+                <div>
+                    <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-2">Wilayah / Region</label>
+                    <div class="search-dropdown" id="currencyDropdown">
+                        <div class="input-minimal cursor-pointer text-sm" id="currencyDisplay">
+                            Indonesia
+                        </div>
+                        <input type="hidden" id="currencyCode" value="Indonesia">
+                        <div class="search-dropdown-list" id="currencyListContainer">
+                            <div class="p-2 border-b border-zinc-100 dark:border-zinc-800">
+                                <input type="text" class="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-lg px-3 py-2 text-xs focus:ring-0 outline-none" id="currencySearch" placeholder="Cari wilayah..." autocomplete="off">
+                            </div>
+                            <div id="currencyList" class="py-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session -->
+                <div>
+                    <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-2">Auth Session</label>
+                    <textarea id="accessToken" rows="4" placeholder="Tempel Semua JSON https://chatgpt.com/api/auth/session Disini" class="input-minimal resize-none text-xs sm:text-sm"></textarea>
+                </div>
+            </div>
+
+            <!-- Generate -->
+            <button id="generateBtn" class="btn-minimal mt-10 w-full group py-4 text-sm sm:text-base">
+                <span>Buat Link Checkout</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+
+            <!-- Loading -->
+            <div id="loadingState" class="mt-10 items-center justify-center gap-3 hidden">
+                <svg class="spinner w-5 h-5 text-black dark:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" stroke="rgba(0,0,0,0.1)" stroke-dasharray="31.4 31.4" stroke-dashoffset="0"></circle>
+                    <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor"></path>
+                </svg>
+                <span class="text-sm font-medium">Processing...</span>
+            </div>
+
+            <!-- ═══════════════════ SUCCESS ═══════════════════ -->
+            <div id="successBox" class="mt-8 hidden">
+                <div class="fade-in-up bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <p class="text-sm font-bold">Link Ready</p>
+                        <button id="closeSuccessBtn" class="text-zinc-400 hover:text-black dark:hover:text-white transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <input type="text" id="resultUrl" readonly class="input-minimal mb-6 font-mono text-[13px] text-center" style="filter: blur(4px);" onmouseenter="this.style.filter='none'" onmouseleave="this.style.filter='blur(4px)'">
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <button id="copyBtn" class="btn-minimal !py-2.5 !text-sm">Copy</button>
+                        <button id="openLinkBtn" class="btn-outline-minimal">Open</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════ ERROR ═══════════════════ -->
+            <div id="errorBox" class="hidden mt-8">
+                <div class="fade-in-up bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/50 rounded-2xl p-4 flex items-start gap-3">
+                    <div class="w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">!</div>
+                    <div>
+                        <p class="text-sm font-bold text-red-600 dark:text-red-400">Error</p>
+                        <p class="text-xs text-red-500/80 mt-1" id="errorMsg"></p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="mt-12 text-center">
+            <p class="text-[11px] text-zinc-400 uppercase tracking-widest">Coded By Kiddo</p>
+        </footer>
+    </div>
+
+    <!-- ═══════════════════ SUPPORT ═══════════════════ -->
+    <button id="floatingSupportBtn" class="floating-support-btn">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+        </svg>
+    </button>
+
+    <div class="support-overlay" id="supportOverlay"></div>
+    <div class="support-popup" id="supportPopup">
+        <h3 class="text-lg font-bold">Support</h3>
+        <p class="text-sm text-zinc-500 mt-2">Dukungan Anda membantu pengembangan tools ini.</p>
+        <a href="https://tako.id/petrix" target="_blank" class="btn-minimal !py-3 w-full text-sm mb-4">Donasi via tako.id</a>
+        <button id="closeSupportPopupBtn" class="w-full text-zinc-400 text-xs hover:text-black dark:hover:text-white transition-colors">Tutup</button>
+    </div>
+
+    <script>
+        // Anti-Inspect & DevTools blocking
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (
+                e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+                (e.ctrlKey && e.key === 'u')
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Debugger loop to make devtools annoying
+        setInterval(() => {
+            const before = new Date().getTime();
+            debugger;
+            const after = new Date().getTime();
+            if (after - before > 100) {
+                // DevTools was likely open
+                window.location.reload();
+            }
+        }, 1000);
+
+        const currencies = [
+            { key: "Indonesia", currency: "IDR" },
+            { key: "Singapore", currency: "SGD" },
+            { key: "Malaysia", currency: "MYR" },
+            { key: "Thailand", currency: "THB" },
+            { key: "Vietnam", currency: "VND" },
+            { key: "United States", currency: "USD" },
+            { key: "United Kingdom", currency: "GBP" },
+            { key: "Australia", currency: "AUD" },
+            { key: "Japan", currency: "JPY" },
+            { key: "South Korea", currency: "KRW" },
+            { key: "China", currency: "CNY" },
+            { key: "France", currency: "EUR" },
+            { key: "Germany", currency: "EUR" },
+            { key: "Canada", currency: "CAD" },
+            { key: "Norway", currency: "NOK" },
+            { key: "Sweden", currency: "SEK" },
+            { key: "Switzerland", currency: "CHF" },
+            { key: "Turkey", currency: "TRY" },
+            { key: "Brazil", currency: "BRL" },
+            { key: "Mexico", currency: "MXN" }
+        ];
+
+        let selectedPlan = 'plus';
+        let selectedPayment = 'shortlink';
+        let selectedCurrency = 'Indonesia';
+
+        const currencyDisplay = document.getElementById('currencyDisplay');
+        const currencySearch = document.getElementById('currencySearch');
+        const currencyList = document.getElementById('currencyList');
+        const currencyListContainer = document.getElementById('currencyListContainer');
+        const paymentDisplay = document.getElementById('paymentDisplay');
+        const paymentList = document.getElementById('paymentList');
+        const generateBtn = document.getElementById('generateBtn');
+        const loadingState = document.getElementById('loadingState');
+        const successBox = document.getElementById('successBox');
+        const errorBox = document.getElementById('errorBox');
+        const resultUrl = document.getElementById('resultUrl');
+
+        function renderCurrencies(filter = '') {
+            currencyList.innerHTML = '';
+            const filtered = currencies.filter(c => 
+                c.key.toLowerCase().includes(filter.toLowerCase()) || 
+                c.currency.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            filtered.forEach(c => {
+                const item = document.createElement('div');
+                item.className = `search-dropdown-item ${selectedCurrency === c.key ? 'active' : ''}`;
+                item.innerText = `${c.key} (${c.currency})`;
+                item.onclick = (e) => {
+                    e.stopPropagation();
+                    selectedCurrency = c.key;
+                    currencyDisplay.innerText = c.key;
+                    currencyListContainer.classList.add('hidden');
+                    renderCurrencies();
+                };
+                currencyList.appendChild(item);
+            });
+        }
+
+        currencyDisplay.onclick = () => {
+            currencyListContainer.classList.toggle('hidden');
+            if (!currencyListContainer.classList.contains('hidden')) {
+                currencySearch.focus();
+                renderCurrencies(currencySearch.value);
+            }
+        };
+
+        currencySearch.oninput = (e) => renderCurrencies(e.target.value);
+
+        paymentDisplay.onclick = () => paymentList.classList.toggle('hidden');
+        paymentList.querySelectorAll('.search-dropdown-item').forEach(item => {
+            item.onclick = () => {
+                selectedPayment = item.dataset.value;
+                paymentDisplay.innerText = item.innerText;
+                paymentList.classList.add('hidden');
+            };
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!document.getElementById('currencyDropdown').contains(e.target)) currencyListContainer.classList.add('hidden');
+            if (!document.getElementById('paymentDropdown').contains(e.target)) paymentList.classList.add('hidden');
+        });
+
+        document.getElementById('floatingSupportBtn').onclick = () => {
+            document.getElementById('supportOverlay').classList.add('show');
+            document.getElementById('supportPopup').classList.add('show');
+        };
+        const closeSupport = () => {
+            document.getElementById('supportOverlay').classList.remove('show');
+            document.getElementById('supportPopup').classList.remove('show');
+        };
+        document.getElementById('supportOverlay').onclick = closeSupport;
+        document.getElementById('closeSupportPopupBtn').onclick = closeSupport;
+
+        document.getElementById('closeSuccessBtn').onclick = () => successBox.classList.add('hidden');
+
+        document.getElementById('copyBtn').onclick = () => {
+            resultUrl.select();
+            document.execCommand('copy');
+            const btn = document.getElementById('copyBtn');
+            btn.innerText = 'Copied';
+            setTimeout(() => btn.innerText = 'Copy', 2000);
+        };
+        document.getElementById('openLinkBtn').onclick = () => window.open(resultUrl.value, '_blank');
+
+        generateBtn.onclick = async () => {
+            let sess = document.getElementById('accessToken').value.trim();
+            if (!sess) return alert('Session diperlukan');
+
+            // Ekstrak accessToken otomatis jika yang dipaste adalah seluruh JSON
+            try {
+                const parsed = JSON.parse(sess);
+                if (parsed.accessToken) {
+                    sess = parsed.accessToken;
+                } else if (parsed.session && parsed.session.accessToken) {
+                    sess = parsed.session.accessToken;
+                }
+            } catch (e) {
+                // Jika bukan JSON, gunakan string asli (asumsi user paste token langsung)
+            }
+
+            generateBtn.classList.add('hidden');
+            loadingState.classList.remove('hidden');
+            loadingState.classList.add('flex');
+            successBox.classList.add('hidden');
+            errorBox.classList.add('hidden');
+
+            try {
+                const res = await fetch('/api/gpt/payment/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ plan: selectedPlan, payment: selectedPayment, currency: selectedCurrency, session: sess })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    resultUrl.value = data.url;
+                    successBox.classList.remove('hidden');
+                } else {
+                    document.getElementById('errorMsg').innerText = data.error || 'Terjadi kesalahan. Cek kembali token session Anda.';
+                    errorBox.classList.remove('hidden');
+                }
+            } catch {
+                document.getElementById('errorMsg').innerText = 'Gagal terhubung ke server. Silakan coba lagi nanti.';
+                errorBox.classList.remove('hidden');
+            } finally {
+                generateBtn.classList.remove('hidden');
+                loadingState.classList.add('hidden');
+                loadingState.classList.remove('flex');
+            }
+        };
+
+        renderCurrencies();
+        currencySearch.value = selectedCurrency;
+    </script>
+</Layout>

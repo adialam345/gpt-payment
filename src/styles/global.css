@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #000000;
+  --color-secondary: #ffffff;
+  --color-accent: #333333;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-black antialiased;
+  }
+  
+  /* Support dark mode if user prefers, but default is white */
+  @media (prefers-color-scheme: dark) {
+    body {
+      @apply bg-zinc-950 text-zinc-100;
+    }
+  }
+}
+
+@layer components {
+  .card-minimal {
+    @apply bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl shadow-sm;
+  }
+  
+  .plan-card {
+    @apply cursor-pointer transition-all duration-300 relative overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50;
+  }
+  
+  .plan-card.active {
+    @apply border-black dark:border-white ring-1 ring-black dark:ring-white bg-white dark:bg-zinc-800;
+  }
+  
+  .plan-card.disabled {
+    @apply opacity-40 cursor-not-allowed grayscale;
+  }
+  
+  .plan-unavailable-badge {
+    @apply absolute top-2 right-2 px-1.5 py-0.5 bg-zinc-200 dark:bg-zinc-800 text-[9px] font-bold text-zinc-500 rounded uppercase tracking-wider;
+  }
+  
+  .input-minimal {
+    @apply w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:border-black dark:focus:border-white transition-all;
+  }
+  
+  .btn-minimal {
+    @apply flex items-center justify-center gap-2 bg-black dark:bg-white text-white dark:text-black font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 active:scale-[0.98];
+  }
+  
+  .btn-outline-minimal {
+    @apply flex items-center justify-center gap-2 border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-medium py-2.5 rounded-xl transition-all text-sm;
+  }
+
+  .search-dropdown {
+    @apply relative w-full;
+  }
+  
+  .search-dropdown-list {
+    @apply absolute z-50 w-full mt-2 max-h-60 overflow-y-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-xl hidden;
+  }
+  
+  .search-dropdown-item {
+    @apply px-4 py-2.5 text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white cursor-pointer transition-colors flex items-center justify-between;
+  }
+  
+  .search-dropdown-item.active {
+    @apply bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white font-medium;
+  }
+  
+  .search-dropdown-divider {
+    @apply h-px bg-zinc-100 dark:bg-zinc-800 my-1;
+  }
+  
+  .spinner {
+    @apply animate-spin;
+  }
+  
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .fade-in-up {
+    animation: fadeInUp 0.4s ease-out forwards;
+  }
+  
+  .floating-support-btn {
+    @apply fixed bottom-6 right-6 w-12 h-12 bg-black dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-95 z-50;
+  }
+  
+  .support-overlay {
+    @apply fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] hidden;
+  }
+  
+  .support-overlay.show {
+    @apply block;
+  }
+  
+  .support-popup {
+    @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-sm bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-6 rounded-3xl z-[70] hidden;
+  }
+  
+  .support-popup.show {
+    @apply block;
+    animation: fadeInUp 0.4s ease-out forwards;
+  }
+}
