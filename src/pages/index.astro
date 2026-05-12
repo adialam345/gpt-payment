@@ -3,44 +3,49 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Checkout - Minimal GPT Link Generator">
-    <div class="max-w-2xl mx-auto px-6 py-12 sm:py-20">
+    <!-- ═══════════════════ AMBIENT BACKGROUND ═══════════════════ -->
+    <div class="fixed inset-0 -z-20 bg-white dark:bg-zinc-950"></div>
+    <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-zinc-200 dark:bg-zinc-800 bg-glow"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-zinc-100 dark:bg-zinc-900 bg-glow" style="animation-delay: -5s;"></div>
+
+    <div class="max-w-2xl mx-auto px-6 py-12 sm:py-20 relative">
 
         <!-- ═══════════════════ HEADER ═══════════════════ -->
-        <header class="text-center mb-12">
-            <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-zinc-100 dark:bg-zinc-800 mb-6">
-                <svg class="w-7 h-7 text-black dark:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <header class="text-center mb-16 opacity-0 fade-in-up">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-[2rem] bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 shadow-sm mb-8 hover:rotate-12 transition-all duration-500 hover:scale-110">
+                <svg class="w-8 h-8 text-black dark:text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                     <rect x="2" y="5" width="20" height="14" rx="2"></rect>
                     <line x1="2" y1="10" x2="22" y2="10"></line>
                 </svg>
             </div>
-            <h1 class="text-3xl font-bold tracking-tight text-black dark:text-white">Checkout</h1>
-            <p class="text-zinc-500 mt-2 text-sm">Buat link pembayaran ChatGPT Plus secara instan</p>
+            <h1 class="text-4xl font-extrabold tracking-tight text-black dark:text-white mb-3">Checkout</h1>
+            <p class="text-zinc-500 text-sm max-w-xs mx-auto leading-relaxed">Sistem instan untuk generate link pembayaran ChatGPT Plus secara aman.</p>
         </header>
 
         <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
-        <main class="card-minimal p-5 sm:p-10" id="main-card">
+        <main class="card-minimal p-5 sm:p-10 opacity-0 fade-in-up stagger-1" id="main-card">
 
             <!-- Panduan Langkah (Pindah ke Atas) -->
-            <div class="bg-zinc-50 dark:bg-zinc-800/30 rounded-2xl p-5 sm:p-6 border border-zinc-100 dark:border-zinc-800 mb-8">
-                <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-zinc-400">Cara Penggunaan</h3>
-                <ul class="space-y-4">
-                    <li class="flex gap-3">
-                        <span class="flex-shrink-0 w-5 h-5 rounded-full bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center">1</span>
-                        <p class="text-[11px] sm:text-xs text-zinc-500 leading-relaxed">Login ke akun <a href="https://chatgpt.com" target="_blank" class="text-black dark:text-white underline">ChatGPT</a> Anda terlebih dahulu.</p>
-                    </li>
-                    <li class="flex gap-3">
-                        <span class="flex-shrink-0 w-5 h-5 rounded-full bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center">2</span>
-                        <p class="text-[11px] sm:text-xs text-zinc-500 leading-relaxed">Buka link <a href="https://chatgpt.com/api/auth/session" target="_blank" class="text-black dark:text-white font-medium underline">chatgpt.com/api/auth/session</a> di tab baru.</p>
-                    </li>
-                    <li class="flex gap-3">
-                        <span class="flex-shrink-0 w-5 h-5 rounded-full bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center">3</span>
+            <div class="bg-black/[0.02] dark:bg-white/[0.02] rounded-3xl p-6 sm:p-8 border border-black/[0.03] dark:border-white/[0.03] mb-10">
+                <h3 class="text-[10px] font-bold uppercase tracking-[0.3em] mb-6 text-zinc-400 text-center">Cara Penggunaan</h3>
+                <div class="grid grid-cols-1 gap-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-6 h-6 rounded-full bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5 shadow-lg shadow-black/10 dark:shadow-white/10">1</div>
+                        <p class="text-[11px] sm:text-xs text-zinc-500 leading-relaxed">Login ke akun <a href="https://chatgpt.com" target="_blank" class="text-black dark:text-white font-semibold underline underline-offset-4 decoration-zinc-300 dark:decoration-zinc-700">ChatGPT</a> Anda terlebih dahulu.</p>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-6 h-6 rounded-full bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5 shadow-lg shadow-black/10 dark:shadow-white/10">2</div>
+                        <p class="text-[11px] sm:text-xs text-zinc-500 leading-relaxed">Buka link <a href="https://chatgpt.com/api/auth/session" target="_blank" class="text-black dark:text-white font-semibold underline underline-offset-4 decoration-zinc-300 dark:decoration-zinc-700">chatgpt.com/api/auth/session</a> di tab baru.</p>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-6 h-6 rounded-full bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5 shadow-lg shadow-black/10 dark:shadow-white/10">3</div>
                         <p class="text-[11px] sm:text-xs text-zinc-500 leading-relaxed">Salin (Copy) seluruh kode JSON yang muncul di halaman tersebut.</p>
-                    </li>
-                    <li class="flex gap-3">
-                        <span class="flex-shrink-0 w-5 h-5 rounded-full bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center">4</span>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-6 h-6 rounded-full bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5 shadow-lg shadow-black/10 dark:shadow-white/10">4</div>
                         <p class="text-[11px] sm:text-xs text-zinc-500 leading-relaxed">Tempel (Paste) ke kolom **Auth Session** di bawah dan klik generate.</p>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
 
             <!-- Plan Selection -->
@@ -65,10 +70,10 @@ import Layout from '../layouts/Layout.astro';
                 </div>
             </div>
 
-            <div class="h-px bg-zinc-100 dark:bg-zinc-800 mb-8"></div>
+            <div class="h-px bg-gradient-to-r from-transparent via-zinc-100 dark:via-zinc-800 to-transparent mb-10"></div>
 
             <!-- Form -->
-            <div class="space-y-6">
+            <div class="space-y-8">
                 <!-- Payment Method -->
                 <div>
                     <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-2">Metode Pembayaran</label>
@@ -118,7 +123,7 @@ import Layout from '../layouts/Layout.astro';
             </button>
 
             <!-- Loading -->
-            <div id="loadingState" class="mt-10 items-center justify-center gap-3 hidden">
+            <div id="loadingState" class="mt-10 items-center justify-center gap-3 hidden pulse-subtle">
                 <svg class="spinner w-5 h-5 text-black dark:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="10" stroke="rgba(0,0,0,0.1)" stroke-dasharray="31.4 31.4" stroke-dashoffset="0"></circle>
                     <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor"></path>
@@ -128,7 +133,7 @@ import Layout from '../layouts/Layout.astro';
 
             <!-- ═══════════════════ SUCCESS ═══════════════════ -->
             <div id="successBox" class="mt-8 hidden">
-                <div class="fade-in-up bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 rounded-2xl p-6">
+                <div class="scale-in-bounce bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 rounded-2xl p-6">
                     <div class="flex items-center justify-between mb-6">
                         <p class="text-sm font-bold">Link Ready</p>
                         <button id="closeSuccessBtn" class="text-zinc-400 hover:text-black dark:hover:text-white transition-colors">
@@ -166,45 +171,55 @@ import Layout from '../layouts/Layout.astro';
         </footer>
     </div>
 
-    <!-- ═══════════════════ SUPPORT ═══════════════════ -->
-    <button id="floatingSupportBtn" class="floating-support-btn">
-        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-        </svg>
-    </button>
-
-    <div class="support-overlay" id="supportOverlay"></div>
-    <div class="support-popup" id="supportPopup">
-        <h3 class="text-lg font-bold">Support</h3>
-        <p class="text-sm text-zinc-500 mt-2">Dukungan Anda membantu pengembangan tools ini.</p>
-        <a href="https://tako.id/petrix" target="_blank" class="btn-minimal !py-3 w-full text-sm mb-4">Donasi via tako.id</a>
-        <button id="closeSupportPopupBtn" class="w-full text-zinc-400 text-xs hover:text-black dark:hover:text-white transition-colors">Tutup</button>
-    </div>
 
     <script>
-        // Anti-Inspect & DevTools blocking
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('keydown', e => {
-            if (
-                e.key === 'F12' || 
-                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
-                (e.ctrlKey && e.key === 'u')
-            ) {
-                e.preventDefault();
-                return false;
-            }
-        });
+        // Optimized Anti-Inspect
+        (function() {
+            const block = () => {
+                setInterval(() => {
+                    const before = new Date().getTime();
+                    debugger;
+                    const after = new Date().getTime();
+                    if (after - before > 100) {
+                        // DevTools detected, just clear console
+                        console.clear();
+                    }
+                }, 200); // Slower interval to reduce CPU usage
+            };
+            
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.addEventListener('keydown', e => {
+                if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || (e.ctrlKey && e.key === 'u')) {
+                    e.preventDefault();
+                }
+            });
 
-        // Debugger loop to make devtools annoying
-        setInterval(() => {
-            const before = new Date().getTime();
-            debugger;
-            const after = new Date().getTime();
-            if (after - before > 100) {
-                // DevTools was likely open
-                window.location.reload();
+            // Continuous console clearing
+            setInterval(() => {
+                console.clear();
+            }, 500);
+
+            block();
+        })();
+
+        // Stealth Encryption (Simple XOR + Base64)
+        const SECRET_KEY = "Kiddo-Stealth-Key-2026";
+        const _v = (t) => {
+            let r = "";
+            for (let i = 0; i < t.length; i++) {
+                r += String.fromCharCode(t.charCodeAt(i) ^ SECRET_KEY.charCodeAt(i % SECRET_KEY.length));
             }
-        }, 1000);
+            return btoa(unescape(encodeURIComponent(r)));
+        };
+
+        const _d = (e) => {
+            const t = decodeURIComponent(escape(atob(e)));
+            let r = "";
+            for (let i = 0; i < t.length; i++) {
+                r += String.fromCharCode(t.charCodeAt(i) ^ SECRET_KEY.charCodeAt(i % SECRET_KEY.length));
+            }
+            return JSON.parse(r);
+        };
 
         const currencies = [
             { key: "Indonesia", currency: "IDR" },
@@ -291,16 +306,6 @@ import Layout from '../layouts/Layout.astro';
             if (!document.getElementById('paymentDropdown').contains(e.target)) paymentList.classList.add('hidden');
         });
 
-        document.getElementById('floatingSupportBtn').onclick = () => {
-            document.getElementById('supportOverlay').classList.add('show');
-            document.getElementById('supportPopup').classList.add('show');
-        };
-        const closeSupport = () => {
-            document.getElementById('supportOverlay').classList.remove('show');
-            document.getElementById('supportPopup').classList.remove('show');
-        };
-        document.getElementById('supportOverlay').onclick = closeSupport;
-        document.getElementById('closeSupportPopupBtn').onclick = closeSupport;
 
         document.getElementById('closeSuccessBtn').onclick = () => successBox.classList.add('hidden');
 
@@ -336,12 +341,24 @@ import Layout from '../layouts/Layout.astro';
             errorBox.classList.add('hidden');
 
             try {
+                // Encrypting everything into one stealth packet
+                const packet = _v(JSON.stringify({ 
+                    plan: selectedPlan, 
+                    payment: selectedPayment, 
+                    currency: selectedCurrency, 
+                    session: sess 
+                }));
+
                 const res = await fetch('/api/gpt/payment/', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ plan: selectedPlan, payment: selectedPayment, currency: selectedCurrency, session: sess })
+                    headers: { 
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ d: packet })
                 });
-                const data = await res.json();
+                const rawData = await res.json();
+                const data = _d(rawData.r);
+                
                 if (data.success) {
                     resultUrl.value = data.url;
                     successBox.classList.remove('hidden');

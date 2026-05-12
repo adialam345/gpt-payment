@@ -21,15 +21,19 @@
 
 @layer components {
   .card-minimal {
-    @apply bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl shadow-sm;
+    @apply bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl border border-white/20 dark:border-zinc-800/50 rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.2)];
   }
   
   .plan-card {
-    @apply cursor-pointer transition-all duration-300 relative overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50;
+    @apply cursor-pointer transition-all duration-500 relative overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-white/5;
+  }
+  
+  .plan-card:not(.disabled):hover {
+    @apply -translate-y-1 scale-[1.02];
   }
   
   .plan-card.active {
-    @apply border-black dark:border-white ring-1 ring-black dark:ring-white bg-white dark:bg-zinc-800;
+    @apply border-black dark:border-white ring-1 ring-black dark:ring-white bg-white dark:bg-zinc-800 shadow-xl shadow-black/5 dark:shadow-white/5;
   }
   
   .plan-card.disabled {
@@ -41,11 +45,11 @@
   }
   
   .input-minimal {
-    @apply w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:border-black dark:focus:border-white transition-all;
+    @apply w-full bg-zinc-100/50 dark:bg-zinc-800/50 border border-transparent rounded-2xl px-5 py-4 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:bg-white dark:focus:bg-zinc-900 focus:border-black/10 dark:focus:border-white/10 ring-0 transition-all duration-300;
   }
   
   .btn-minimal {
-    @apply flex items-center justify-center gap-2 bg-black dark:bg-white text-white dark:text-black font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 active:scale-[0.98];
+    @apply flex items-center justify-center gap-2 bg-black dark:bg-white text-white dark:text-black font-semibold py-3.5 rounded-xl transition-all duration-300 hover:opacity-90 hover:shadow-xl hover:shadow-black/20 dark:hover:shadow-white/20 active:scale-[0.98];
   }
   
   .btn-outline-minimal {
@@ -57,7 +61,7 @@
   }
   
   .search-dropdown-list {
-    @apply absolute z-50 w-full mt-2 max-h-60 overflow-y-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-xl hidden;
+    @apply absolute z-50 w-full mt-3 max-h-60 overflow-y-auto bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl hidden;
   }
   
   .search-dropdown-item {
@@ -82,27 +86,57 @@
   }
   
   .fade-in-up {
-    animation: fadeInUp 0.4s ease-out forwards;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  
-  .floating-support-btn {
-    @apply fixed bottom-6 right-6 w-12 h-12 bg-black dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-95 z-50;
+
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+
+  @keyframes ambientGlow {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+    33% { transform: translate(30px, -50px) scale(1.1); opacity: 0.5; }
+    66% { transform: translate(-20px, 20px) scale(0.9); opacity: 0.3; }
+    100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
   }
-  
-  .support-overlay {
-    @apply fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] hidden;
+
+  .bg-glow {
+    @apply absolute -z-10 blur-[120px] rounded-full;
+    animation: ambientGlow 15s ease-in-out infinite;
   }
-  
-  .support-overlay.show {
-    @apply block;
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
   }
-  
-  .support-popup {
-    @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-sm bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-6 rounded-3xl z-[70] hidden;
+
+  .shimmer-text {
+    background: linear-gradient(90deg, #888, #fff, #888);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
   }
-  
-  .support-popup.show {
-    @apply block;
-    animation: fadeInUp 0.4s ease-out forwards;
+
+  @keyframes scaleInBounce {
+    0% { transform: scale(0.9); opacity: 0; }
+    50% { transform: scale(1.02); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .scale-in-bounce {
+    animation: scaleInBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes pulseSubtle {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(0.98); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .pulse-subtle {
+    animation: pulseSubtle 2s ease-in-out infinite;
   }
 }
